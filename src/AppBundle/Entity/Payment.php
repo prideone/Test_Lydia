@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Payment
  *
  * @ORM\Table(name="payment")
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PaymentRepository")
  */
 class Payment
@@ -45,7 +46,7 @@ class Payment
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
 
@@ -154,6 +155,17 @@ class Payment
     public function getEmail()
     {
         return $this->email;
+    }
+
+
+    /**
+     * @ORM\PrePersist
+    */
+    public function upDateDate()
+    {
+        if (is_null($this->createdAt)) {
+            $this->createdAt = new \DateTime();
+        }
     }
 }
 

@@ -2,6 +2,6 @@ app:
     # loads routes from the PHP annotations of the controllers found in that directory
     resource: '@AppBundle/Controller/'
     type:     annotation
-# payment_index:
-#     path:     /payment/index
-#     defaults: { _controller: AppBundle:Payment:index }
+payment_create:
+    path:     /payment/create
+    defaults: { _controller: AppBundle:Payment:create }
