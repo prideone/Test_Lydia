@@ -1,0 +1,5 @@
+# app/config/routing.yml
+payment_index:
+    resource: '@AppBundle/Controller/'
+    type:     annotation
+    prefix:   /payment
