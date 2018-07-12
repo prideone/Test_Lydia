@@ -50,6 +50,20 @@ class Payment
      */
     private $email;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="request_id", type="integer", nullable=true)
+     */
+    private $requestId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="request_uuid", type="string", length=255, nullable=true)
+     */
+    private $requestUuid;
+
 
     /**
      * Get id
@@ -155,6 +169,57 @@ class Payment
     public function getEmail()
     {
         return $this->email;
+    }
+
+
+    /**
+     * Set requestId
+     *
+     * @param integer $requestId
+     *
+     * @return Payment
+     */
+    public function setRequestId($requestId)
+    {
+        $this->requestId = $requestId;
+
+        return $this;
+    }
+
+    /**
+     * Get requestId
+     *
+     * @return integer
+     */
+    public function getRequestId()
+    {
+        return $this->requestId;
+    }
+
+
+
+    /**
+     * Set requestUuid
+     *
+     * @param string $requestUuid
+     *
+     * @return Payment
+     */
+    public function setRequestUuid($requestUuid)
+    {
+        $this->requestUuid = $requestUuid;
+
+        return $this;
+    }
+
+    /**
+     * Get requestUuid
+     *
+     * @return string
+     */
+    public function getRequestUuid()
+    {
+        return $this->requestUuid;
     }
 
 

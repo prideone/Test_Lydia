@@ -63,51 +63,10 @@ class PaymentController extends Controller{
        		$form->handleRequest($request);
        		if ($form->isValid()) {
 
-       			$em->persist($payment);
+				$payment = $this->get('api_lydia')->doRequest($payment);
+
+				$em->persist($payment);
        			$em->flush();
-
-       			$apiUrl = "https://homologation.lydia-app.com";
-       			$initPaymentUrl = "/api/request/do.json";
-
-       			$data = array(
-				    'user_token' => '+33684761046',
-				    'amount' => "12.40",
-				    'currency' => "EUR",
-				    'type' => "email",
-				    'recipient' => "stephane.bolu@gmail.com",
-				    'message' => 'Anniv bob',
-       			);
-
-
-       			try{
-       				$ch = curl_init();
-
-       				if ($ch === false) {
-				        throw new Exception('failed to initialize');
-				    }
-
-					curl_setopt($ch, CURLOPT_URL, $apiUrl.$initPaymentUrl);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-					curl_setopt($ch, CURLOPT_POST, 1);
-					curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-					curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-					$result = curl_exec($ch);
-
-					if ($result === false) {
-				        throw new \Exception(curl_error($ch), curl_errno($ch));
-				    }
-
-
-       			} catch(Exception $e) {
-				    trigger_error(sprintf('Curl failed with error #%d: %s',$e->getCode(), $e->getMessage()),E_USER_ERROR);
-				}
-       			
-
-       			var_dump($result);
-       			die();
-
 
        			return new JsonResponse(array('message' => 'Success!'), 200);
        		}else{
