@@ -1,0 +1,55 @@
+.navbar{
+	background-color: white;
+}
+.navbar-light .navbar-brand{
+	color: #1d74b6;
+}
+
+.container{
+	max-width:1024px !important;
+}
+
+body { 
+	background: #F6F9FC; 
+    font: 18px/1.5 sans-serif;
+}
+
+section{
+    padding: 50px 0px;
+}
+
+h1{ 
+    line-height: 1.2; 
+    margin: 0 0 .5em;
+    text-align: center;
+}
+
+.content-container{
+	background-color: white;
+	border-radius:3px;
+	padding: 30px;
+	-webkit-box-shadow: 10px 10px 50px 0 rgba(0,0,0,0.03);
+    box-shadow: 10px 10px 50px 0 rgba(0,0,0,0.03);
+}
+
+.form-group label{
+	text-align: left;
+}
+
+#formPayment{
+    margin:50px;
+    text-align: left;
+}
+
+#submitPayment{
+	margin-top: 40px;
+}
+
+@media screen and (max-width: 768px) {
+	.content-container{
+		padding: 30px 10px;
+	}
+	#formPayment{
+        margin:20px;
+    }
+}

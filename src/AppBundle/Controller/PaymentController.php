@@ -65,10 +65,14 @@ class PaymentController extends Controller{
 
 				$payment = $this->get('api_lydia')->doRequest($payment);
 
-				$em->persist($payment);
-       			$em->flush();
+				if ($payment) {
+					$em->persist($payment);
+       				$em->flush();
+       				return new JsonResponse(array('message' => 'Success!'), 200);			
+       			}else{
+       				return new JsonResponse(array('message' => 'Error'), 500);
+       			}
 
-       			return new JsonResponse(array('message' => 'Success!'), 200);
        		}else{
        			$errorString = var_export($this->getErrorMessages($form), true);
        			return new JsonResponse(array('message' => 'Error in the form submited!'.$errorString), 400);
@@ -76,6 +80,22 @@ class PaymentController extends Controller{
        	}else{
        		return new JsonResponse(array('message' => 'Form not submited with POST method!'), 400);
        	}
+    }
+
+
+    /**
+     * @Route("/list", name="listpayments")
+     * Page to see all the payments
+     */
+    public function listAction(){
+
+    	$em = $this->getDoctrine()->getManager();
+
+    	$payments = $em->getRepository('AppBundle:Payment')->findAll();
+
+    	return $this->render('payment/list.html.twig', array(
+            "payments" => $payments,
+        ));
     }
 
 

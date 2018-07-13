@@ -64,6 +64,13 @@ class Payment
      */
     private $requestUuid;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="amount", type="integer", nullable=true)
+     */
+    private $amount;
+
 
     /**
      * Get id
@@ -220,6 +227,31 @@ class Payment
     public function getRequestUuid()
     {
         return $this->requestUuid;
+    }
+
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     *
+     * @return Payment
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return integer
+     */
+    public function getAmount()
+    {
+        return $this->amount;
     }
 
 

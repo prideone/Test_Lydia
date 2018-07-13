@@ -6,4 +6,4 @@ parameters:
 services:
     api_lydia:
         class: AppBundle\Services\ApiLydia
-        arguments: ['@service_container']
+        arguments: ['@service_container', '@doctrine']

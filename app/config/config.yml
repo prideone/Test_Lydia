@@ -34,6 +34,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals: 
+        api_lydia: "@api_lydia"
 
 # Doctrine Configuration
 doctrine:
