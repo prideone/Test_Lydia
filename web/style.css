@@ -10,8 +10,7 @@
 }
 
 body { 
-	background: #F6F9FC; 
-    font: 18px/1.5 sans-serif;
+	background: #F6F9FC;
 }
 
 section{
@@ -42,7 +41,7 @@ h1{
 }
 
 #submitPayment{
-	margin-top: 40px;
+	margin-top: 20px;
 }
 
 @media screen and (max-width: 768px) {
@@ -52,4 +51,34 @@ h1{
 	#formPayment{
         margin:20px;
     }
+}
+
+label.error{
+	color:red !important;
+}
+
+.label-pending{
+	color: #ffc107;
+}
+.label-success{
+	color: #28a745;
+}
+.label-cancelled{
+	color: #dc3545;
+}
+.label-unknown{
+	color: #6c757d;
+}
+.text{
+	font-size: 15px;
+	font-weight: bold;
+	margin-top:20px;
+}
+
+.alert-payment{
+	margin-top:20px;
+	display: none;
+}
+.label-form{
+	margin-bottom:0px !important;
 }

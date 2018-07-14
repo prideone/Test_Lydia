@@ -65,9 +65,9 @@ class Payment
     private $requestUuid;
 
     /**
-     * @var integer
+     * @var decimal
      *
-     * @ORM\Column(name="amount", type="integer", nullable=true)
+     * @ORM\Column(name="amount", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $amount;
 
@@ -233,7 +233,7 @@ class Payment
     /**
      * Set amount
      *
-     * @param integer $amount
+     * @param decimal $amount
      *
      * @return Payment
      */
@@ -247,7 +247,7 @@ class Payment
     /**
      * Get amount
      *
-     * @return integer
+     * @return decimal
      */
     public function getAmount()
     {

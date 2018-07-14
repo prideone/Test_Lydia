@@ -16,21 +16,26 @@
                     <h1>Welcome to Stephane's Lydia test!</h1>
             
                     <div class="content-container" align="center">
+                        <p class="text">Please enter the information about your payment request.</p>
                         <div class="row justify-content-md-center ">
                             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
                                 <form id="formPayment" method="post" novalidate="novalidate" {{ form_enctype(form) }}>
 
                                     <div class="form-group">
-                                        {{ form_label(form.firstName) }}<br>
+                                        {{ form_label(form.firstName, null, {'label_attr' : {'class' : 'label-form'}}) }}<br>
                                         {{ form_widget(form.firstName, {'attr' : {'class' : 'form-control', 'placeholder' : 'Ex : Stephane'}}) }}
                                     </div>
                                     <div class="form-group">
-                                        {{ form_label(form.lastName) }}<br>
+                                        {{ form_label(form.lastName, null, {'label_attr' : {'class' : 'label-form'}}) }}<br>
                                         {{ form_widget(form.lastName, {'attr' : {'class' : 'form-control', 'placeholder' : 'Ex : Bolu'}}) }}
                                     </div>
                                     <div class="form-group">
-                                        {{ form_label(form.email) }}<br>
+                                        {{ form_label(form.email, null, {'label_attr' : {'class' : 'label-form'}}) }}<br>
                                         {{ form_widget(form.email, {'attr' : {'class' : 'form-control', 'placeholder' : 'Ex : lydia@gmail.com'}}) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.amount, null, {'label_attr' : {'class' : 'label-form'}}) }}<br>
+                                        {{ form_widget(form.amount, {'attr' : {'class' : 'form-control', 'placeholder' : 'Ex : 12.50'}}) }}
                                     </div>
                                     
                                     <div align="right">
@@ -38,7 +43,11 @@
                                     </div>
 
                                     {{ form_rest(form) }}
+
+                                    <div class="alert alert-success alert-payment">Payment successful</div>
                                 </form>
+
+
                             </div>
                         </div>
                     </div>
@@ -51,13 +60,68 @@
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function(){
+
+
+            $.validator.addMethod( "lettersonly", function( value, element ) {
+                return this.optional( element ) || /^[a-z\s-a-záéíóúý]+$/i.test( value );
+            }, "" );
+
+            $("#formPayment").validate({
+                rules: {
+                    'payment[firstName]' : {
+                        required: true,
+                        lettersonly : true
+                    },
+                    'payment[lastName]' : {
+                        required: true,
+                        lettersonly : true
+                    },
+                    'payment[email]' : {
+                        required: true,
+                        email : true
+                    },
+                    'payment[amount]' : {
+                        required: true,
+                        number: true
+                    }
+                },
+                messages : {
+                    'payment[firstName]' : {
+                        required: "Please enter a first name",
+                        lettersonly : "Please enter a valid first name"
+                    },
+                    'payment[lastName]' : {
+                        required: "Please enter a last name",
+                        lettersonly : "Please enter a valid last name"
+                    },
+                    'payment[email]' : {
+                        required: "Please enter an email",
+                        email : "Please enter a valid email"
+                    },
+                    'payment[amount]' : {
+                        required: "Please enter an amount",
+                        number: "Please enter a valid amount"
+                    }
+                }
+            });
+
             
-            $("#formPayment").submit(function(e) {
+            $("#submitPayment").on('click', function(e) {
+
+                e.preventDefault();
+
+                if (!$("#formPayment").valid()) {
+                    return false;
+                }
+
                 var url = "{{ path('payment_create') }}";
-                var button = $('#submitPayment');
+                var button = $(this);
+
 
                 button.html('<img width="20" src="{{ asset("images/ajax-loader.gif") }}">');
                 button.attr('disabled', true);
@@ -70,6 +134,7 @@
                     {
                         console.log("success");
                         button.html('<span class="glyphicon glyphicon-ok"></span> Payment sent!');
+                        $('.alert-payment').show('fast');
                     }
                 });
 

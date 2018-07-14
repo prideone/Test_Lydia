@@ -11,6 +11,9 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
     }
 
     td, th {
@@ -28,7 +31,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-12 col-xs-12">
-                    <h1>List of payments</h1>
+                    <h1>List of payments requests</h1>
             
                     <div class="content-container">
                         <table>
@@ -38,14 +41,16 @@
                                     <th>FirstName</th>
                                     <th>LastName</th>
                                     <th>Email</th>
+                                    <th>Amount</th>
                                     <th>Request id</th>
                                     <th>Request status</th>
                                 </tr>
 
                                 {% for payment in payments %}
+                                    {% set requestStatus = api_lydia.requestStatus(payment.id) %}
                                     <tr>
                                         <td>
-                                            {{payment.createdAt|date('d/m/Y H:i:s')}}
+                                            {{payment.createdAt|date('d/m H:i:s')}}
                                         </td>
                                         <td>
                                             {{payment.firstName}}
@@ -57,10 +62,26 @@
                                             {{payment.email}}
                                         </td>
                                         <td>
+                                            {{payment.amount}}€
+                                        </td>
+                                        <td>
                                             {{payment.requestId}}
                                         </td>
                                         <td>
-                                            {{ api_lydia.requestStatus(payment.id) }}
+                                            {% if requestStatus == 0 %}
+                                                <span class="label-pending">Pending</span>
+                                            {% elseif requestStatus == 1 %}
+                                                <span class="label-success">Success</span>
+                                            {% elseif requestStatus == 6 %}
+                                                <span class="label-cancelled">Cancelled</span>
+                                            {% else %}
+                                                <span class="label-unknown">Unknown status</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if requestStatus == 0 %}
+                                                <a href="{{'https://homologation.lydia-app.com/collect/payment/'~payment.requestUuid~'/auto'}}" target="_blank">Pay</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

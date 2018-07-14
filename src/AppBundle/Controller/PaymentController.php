@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use AppBundle\Entity\Payment;
+use AppBundle\Form\PaymentType;
 
 /**
  * @Route("/payment")
@@ -26,11 +27,7 @@ class PaymentController extends Controller{
 
     	$payment = new Payment();
 
-        $form = $this->createFormBuilder($payment)
-            ->add('firstName', TextType::class, array('required' => true, 'label' => 'First Name'))
-            ->add('lastName', TextType::class, array('required' => true, 'label' => 'Last Name'))
-            ->add('email', TextType::class, array('required' => true, 'label' => 'Email'))
-            ->getForm();
+        $form = $this->createForm(PaymentType::class, $payment);
 
 
         return $this->render('payment/index.html.twig', array(
@@ -53,11 +50,7 @@ class PaymentController extends Controller{
 
     	$payment = new Payment();
 
-    	$form = $this->createFormBuilder($payment)
-            ->add('firstName', TextType::class, array('required' => true, 'label' => 'First Name'))
-            ->add('lastName', TextType::class, array('required' => true, 'label' => 'Last Name'))
-            ->add('email', TextType::class, array('required' => true, 'label' => 'Email'))
-            ->getForm();
+    	$form = $this->createForm(PaymentType::class, $payment);
 
        	if ($request->isMethod('POST')) {
        		$form->handleRequest($request);

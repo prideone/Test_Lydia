@@ -20,7 +20,7 @@ class ApiLydia{
 
 		$data = array(
 		    "vendor_token" => "58385365be57f651843810",
-		    "amount" => "12.33",
+		    "amount" => $payment->getAmount(),
 		    "currency" => "EUR",
 		    "type" => "email",
 		    "recipient" => $payment->getEmail(),
